@@ -1,14 +1,14 @@
 # open-weather-client
-This is an Open Weather REST API client created with Node.js, npm, Vue-cli, Vue.js, Vue-router, Vuex, Axios, Eslint, Babel, JavaScript ES6+, TypeScript and Electron.js
+This is an Open Weather REST API client created with Node.js, npm, Webpack, Vue-cli, Vue.js, Vue-router, Vuex, Axios, Eslint, Babel, JavaScript ES6+, TypeScript and Electron.js
 
 [**Description of this repository**]<br>
-This is an Open Weather REST API client created with Node.js, npm, Vue-cli, Vue.js, Vue-router, Vuex, Axios, Eslint, Babel, JavaScript ES6+, TypeScript and Electron.js.<br>
+This is an Open Weather REST API client created with Node.js, npm, Webpack, Vue-cli, Vue.js, Vue-router, Vuex, Axios, Eslint, Babel, JavaScript ES6+, TypeScript and Electron.js.<br>
 The objective of this project is simply to demonstrate how to use these technologies. This app basically access a REST weather API (OpenWeather - current weather), retrieves the result for the requested city and shows to the user.<br>
 It is a multi-platform desktop app that runs natively on Linux, Windows or iOS, according to the respective distro, and has the GUI components rendered by Electron from the html, css and .js files (compiled from the .ts files).<br>
 
 For running this project, just clone it locally, go to the root folder of the project on your terminal and type:
-- "npm run serve", for the web version. Then, open your browser at localhost:8080.
-- "npm run electron:serve", for the desktop version.
+- "npm install", for installing all needed nodejs modules.
+- "npm run electron:serve", for starting the desktop electron app.
 
 If you wanna create a final user distro for your OS, type:
 - "npm run electron:build". Then go to the distro folder and run the executable file.
