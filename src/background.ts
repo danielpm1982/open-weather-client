@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, Menu, ipcMain, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -19,7 +19,7 @@ function createWindow() {
   win = new BrowserWindow({
     width: 1000,
     height: 700,
-    resizable: false,
+    // resizable: false,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -28,7 +28,6 @@ function createWindow() {
       nodeIntegration: true
     }
   })
-
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string)
@@ -38,10 +37,115 @@ function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
-
   win.on('closed', () => {
     win = null
   })
+  let mainMenuTemplate: object[] = createMainMenuTemplate();
+  let mainMenu: Menu = Menu.buildFromTemplate(mainMenuTemplate);
+  Menu.setApplicationMenu(mainMenu);
+}
+
+//Create main menu template for the Menu to be built from
+function createMainMenuTemplate(): object[]{
+  let mainMenuTemplate: object[] = [
+    {
+      label: 'File',
+      submenu:[
+        {
+          label: 'Home',
+          accelerator: process.platform == 'darwin' ? 'Command+H': 'Ctrl+H',
+          click(){
+            win!.loadURL("http://localhost:8080/");
+          }
+        },
+        {
+            label: 'Login',
+            accelerator: process.platform == 'darwin' ? 'Command+L': 'Ctrl+L',
+            click(){
+              win!.loadURL("http://localhost:8080/login");
+            }
+        },
+        {
+            label: 'Logout',
+            accelerator: process.platform == 'darwin' ? 'Command+O': 'Ctrl+O',
+            click(){
+                win!.webContents.send('logout');
+            }
+        },
+        {
+            label: 'Quit',
+            accelerator: process.platform == 'darwin' ? 'Command+Q': 'Ctrl+Q',
+            click(){
+                app.quit();
+            }
+        }
+      ]
+    },
+    {
+      label: 'View',
+      submenu:[
+        {
+            role: 'reload'
+        },
+        {
+          role: 'resetzoom',
+          accelerator: process.platform == 'darwin' ? 'Command+0': 'Ctrl+0',
+        },
+        {
+            role: 'zoomin',
+            accelerator: process.platform == 'darwin' ? 'Command++': 'Ctrl+=',
+        },
+        {
+            role: 'zoomout',
+            accelerator: process.platform == 'darwin' ? 'Command+-': 'Ctrl+-',
+        }
+      ]
+    },
+    {
+      label: 'Services',
+      submenu:[
+          {
+              label: 'Current Weather',
+              accelerator: process.platform == 'darwin' ? 'Command+W': 'Ctrl+W',
+              click(){
+                win!.loadURL("http://localhost:8080/");
+              }
+          }
+      ]
+    },
+    {
+      label: 'Help',
+      submenu:[
+          {
+              label: 'About',
+              accelerator: process.platform == 'darwin' ? 'Command+U': 'Ctrl+U',
+              click(){
+                win!.loadURL("http://localhost:8080/about");
+              }
+          }
+      ]
+    }
+  ]
+  // Correct the macOS bug of showing 'electron' instead of the first item of the array. Just add an empty first item to the array IF on mac ('darwin').
+  if(process.platform=='darwin'){
+    mainMenuTemplate.unshift({});
+  }
+  // Show development tools only if NOT in production.
+  if(process.env.NODE_ENV != 'production'){
+    mainMenuTemplate.push({
+      label: 'Developer',
+      submenu:[
+        {
+          label: 'Toggle DevTools',
+          accelerator: process.platform == 'darwin' ? 'Command+I': 'Ctrl+I',
+          click(_item:any, focusedWindow:any){
+              focusedWindow.toggleDevTools();
+          }
+        }
+      ]
+    })
+  }
+  return mainMenuTemplate;
 }
 
 // Quit when all windows are closed.
@@ -73,7 +177,8 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString())
     }
   }
-  createWindow()
+  createWindow(),
+  configureOnUserName()
 })
 
 // Exit cleanly on request from parent process in development mode.
@@ -89,4 +194,15 @@ if (isDevelopment) {
       app.quit()
     })
   }
+}
+
+// Configure the ipcMain username catch event
+// Catch username sent from loginWin window and send for the main win window to catch
+// Validation of password not yet implemented - no authentication actually occurs, only a simulation of it - for now...
+function configureOnUserName(){
+  ipcMain.on('username', async (e:Event, username:string) => {
+    await win!.loadURL("http://localhost:8080/")
+    // Send the username for the main win window to catch
+    win!.webContents.send('username', username)
+  })
 }

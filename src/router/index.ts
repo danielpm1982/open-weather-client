@@ -6,6 +6,7 @@ import Vuejs from '../views/Vuejs.vue'
 import NodejsNpm from '../views/Nodejs-npm.vue'
 import Electronjs from '../views/Electronjs.vue'
 import Ts from '../views/Ts.vue'
+import Login from '../views/Login.vue'
 Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
   {
@@ -37,6 +38,11 @@ const routes: Array<RouteConfig> = [
     path: '/ts',
     name: 'Ts',
     component: Ts
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   }
 ]
 const router = new VueRouter({
