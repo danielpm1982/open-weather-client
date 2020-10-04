@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Hello <span :style="{color: spanElementColor}">{{ spanElementText }}</span> !</h1>
+    <h1>Hello <span :style="{ color: getUsernameColor }">{{ getUsername }}</span> !</h1>
     <h2>Welcome to danielpm1982.com</h2>
     <div class="centralTextMain">
       <p>This is an Open Weather REST API client created with Node.js, npm, Webpack, Vue-cli, Vue.js, Vue-router, Vuex, Axios, Eslint, Babel, JavaScript ES6+, TypeScript and Electron.js .</p>
@@ -11,31 +11,32 @@
   //there's a current bug when importing electron submodules. See note at the end of this file
   const { ipcRenderer } = window.require('electron');
   import Vue from 'vue';
+  import { mapGetters } from 'vuex';
   export default Vue.extend({
     name: 'HomeComponent2',
     data(){
-      return {
-        spanElementText: 'World' as string,
-        spanElementColor: 'white' as string
-      }
+      return {}
     },
     methods: {
       configureUserNameChangeAction(): void{
         ipcRenderer.on('username', (_e: Event, username: string)=>{
-          this.spanElementText = username;
-          this.spanElementColor = 'greenyellow';
+          this.$store.dispatch("setUsername", username)
+          this.$store.dispatch("setUsernameColor", "greenyellow")
         })
       },
       configureLogoutAction(): void{
         ipcRenderer.on('logout', (_e: Event)=>{
-          this.spanElementText = 'World';
-          this.spanElementColor = 'white';
+          this.$store.dispatch("setUsername", "World")
+          this.$store.dispatch("setUsernameColor", "white")
         })
       },
       configure(): void{
         this.configureUserNameChangeAction();
         this.configureLogoutAction();
-      }
+      },
+    },
+    computed: {
+      ...mapGetters(['getUsername', 'getUsernameColor'])
     },
     created(){
       this.configure();
