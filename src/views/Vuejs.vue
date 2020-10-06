@@ -17,9 +17,6 @@
       https://en.wikipedia.org/wiki/Vue.js
     </div>
   </div>
-  <!-- We are using node <script>document.write(process.versions.node)</script>,
-  Chrome <script>document.write(process.versions.chrome)</script>,
-  and Electron <script>document.write(process.versions.electron)</script>. -->
 </template>
 <style scoped>
     div.centralTextVuejs{

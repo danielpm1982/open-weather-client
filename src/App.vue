@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/login">Login</router-link>
+      <router-link to="/" exact>Home</router-link>
+      <router-link to="/current-weather" exact>Current Weather</router-link>
+      <router-link to="/about" exact>About</router-link>
+      <router-link to="/login" exact>Login</router-link>
+      <router-link to="/logout" exact>Logout</router-link>
     </div>
     <router-view/>
   </div>
@@ -17,6 +19,10 @@
   #nav {
     padding: 30px;
   }
+  #nav a{
+    margin-left: 1em;
+    text-decoration: none;
+  }
   #nav a.router-link-exact-active {
     color: #42b983;
   }
@@ -26,7 +32,10 @@
   a:visited{
     color: white;
   }
-  a:hover, a:focus{
+  a:focus{
+    color: white;
+  }
+  a:hover{
     color: lightskyblue;;
   }
 </style>

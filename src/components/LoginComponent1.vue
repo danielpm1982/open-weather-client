@@ -4,10 +4,10 @@
     </div>
 </template>
 <script lang="ts">
-  import Vue from 'vue';
+  import Vue from 'vue'
   export default Vue.extend({
     name: 'LoginComponent1',
-  });
+  })
 </script>
 <style scoped>
     div.centralImageLogin{

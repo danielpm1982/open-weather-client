@@ -7,12 +7,19 @@ import NodejsNpm from '../views/Nodejs-npm.vue'
 import Electronjs from '../views/Electronjs.vue'
 import Ts from '../views/Ts.vue'
 import Login from '../views/Login.vue'
+import CurrentWeather from '../views/CurrentWeather.vue'
+import Logout from '../views/Logout.vue'
 Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/current-weather',
+    name: 'CurrentWeather',
+    component: CurrentWeather
   },
   {
     path: '/about',
@@ -43,6 +50,11 @@ const routes: Array<RouteConfig> = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: Logout
   }
 ]
 const router = new VueRouter({

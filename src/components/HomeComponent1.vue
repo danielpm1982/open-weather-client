@@ -17,7 +17,7 @@
   </div>
 </template>
 <script lang="ts">
-  import Vue from 'vue';
+  import Vue from 'vue'
   export default Vue.extend({
     name: 'HomeComponent1',
     methods:{
@@ -30,7 +30,7 @@
         }
       }
     }
-  });
+  })
 </script>
 <style scoped>
   div.centralImages{
