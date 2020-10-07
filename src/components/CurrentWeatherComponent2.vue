@@ -17,7 +17,7 @@
     // const net: Electron.Net = remote.net
     // let request: Electron.ClientRequest
     
-    import WeatherInfoObjInterface from '../interfaces/weather-info-obj-interface'
+    import WeatherInfoObjInterface from '../interfaces/Weather-info-obj-interface'
     let weatherInfoObj: WeatherInfoObjInterface
     const maxTimeInMillisForResponse = 10000
     const unitsSystem = 'metric'

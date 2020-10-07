@@ -42,8 +42,11 @@ function createWindow() {
   win.on('closed', () => {
     win = null
   })
-  let mainMenuTemplate: object[] = createMainMenuTemplate()
-  let mainMenu: Menu = Menu.buildFromTemplate(mainMenuTemplate)
+  const mainMenuTemplate: object[] = createMainMenuTemplate()
+  const mainMenu: Menu = Menu.buildFromTemplate(mainMenuTemplate)
+  // mainMenu.getMenuItemById('login').enabled = true;
+  // mainMenu.getMenuItemById('logout').enabled = false;
+  // mainMenu.getMenuItemById('currentWeather').enabled = false;
   Menu.setApplicationMenu(mainMenu)
 }
 
@@ -61,6 +64,7 @@ function createMainMenuTemplate(): object[]{
           }
         },
         {
+            id: 'login',
             label: 'Login',
             accelerator: process.platform == 'darwin' ? 'Command+L': 'Ctrl+L',
             click(){
@@ -68,6 +72,7 @@ function createMainMenuTemplate(): object[]{
             }
         },
         {
+            id: 'logout',
             label: 'Logout',
             accelerator: process.platform == 'darwin' ? 'Command+O': 'Ctrl+O',
             click(){
@@ -107,6 +112,7 @@ function createMainMenuTemplate(): object[]{
       label: 'Services',
       submenu:[
           {
+              id: 'currentWeather',
               label: 'Current Weather',
               accelerator: process.platform == 'darwin' ? 'Command+W': 'Ctrl+W',
               click(){

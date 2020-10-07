@@ -1,16 +1,18 @@
 # open-weather-client
-This is an Open Weather REST API client created with Node.js, npm, Webpack, Vue-cli, Vue.js, Vue-router, Vuex, Axios, Eslint, Babel, JavaScript ES6+, TypeScript and Electron.js
+This is a Multi-Platform Single Page Application (SPA) REST API Client for Desktop, created with Node.js, npm, Webpack, Babel, Eslint, Vue-cli, Vue.js, Vue-router, Vuex, Axios, JavaScript ES6+, TypeScript and Electron.js
 
 [**Description of this repository**]<br>
-This is an Open Weather REST API client created with Node.js, npm, Webpack, Vue-cli, Vue.js, Vue-router, Vuex, Axios, Eslint, Babel, JavaScript ES6+, TypeScript and Electron.js.<br>
-The objective of this project is simply to demonstrate how to use these technologies. This app basically access a REST weather API (OpenWeather - current weather), retrieves the result for the requested city and shows to the user.<br>
-It is a multi-platform desktop app that runs natively on Linux, Windows or iOS, according to the respective distro, and has the GUI components rendered by Electron from the html, css and .js files (compiled from the .ts files).<br>
+This is a Multi-Platform Single Page Application (SPA) REST API Client for Desktop, created with Node.js, npm, Webpack, Babel, Eslint, Vue-cli, Vue.js, Vue-router, Vuex, Axios, JavaScript ES6+, TypeScript and Electron.js.<br>
+The objective of this project is simply to demonstrate how to use these technologies.<br>
+This app basically access a REST Weather API Service (OpenWeather :: Current Weather), retrieves the weather info for the requested city and shows to the user.<br>
+It is a Single-Page Application (SPA) and a Multi-Platform Desktop App that runs natively on Linux, Windows or iOS, according to the respective distro.<br>
+The app has the OS native GUI components rendered by Electron.js from the single and public index HTML page, where the rendered Vue.js views and their respective subcomponents are mounted into, along with their modularized HTML, CSS and TypeScript code (.ts files are compiled to .js files at runtime). Vue.js components are reactive and automatically updatable according to events and data change. The whole app state (data) and reusable accessor methods are easily reachable from all components when centralized into the Vuex Store and managed there - both data and logic, as well as the session-base persistence. Web Services REST API calls are performed through the promise-based Axios HTTP client.<br>
 
-For running this project, just clone it locally, go to the root folder of the project on your terminal and type:
-- "npm install", for installing all needed nodejs modules.
-- "npm run electron:serve", for starting the desktop electron app.
+For running this project, you should have Node.js and npm installed globally. As soon as you have that installed, just clone this project locally, go to its root folder and, in your terminal, type:
+- "npm install", for installing all needed Node.js modules;
+- "npm run electron:serve", for starting the desktop Electron app.
 
-If you wanna create a final user distro for your OS, type:
+If you then wanna create a final user distro for your OS, type:
 - "npm run electron:build". Then go to the distro folder and run the executable file.
 
 This repository is a single-project repo with Git version control.
