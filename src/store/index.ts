@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import WeatherInfoObjInterface from '../interfaces/Weather-info-obj-interface'
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     username: "" as string,
     usernameColor: "" as string,
     city: "" as string,
-    isLogged: false as boolean
+    isLogged: false as boolean,
+    weatherInfoObj: null as unknown as WeatherInfoObjInterface
   },
   getters:{
     getUsername: state => {
@@ -52,6 +54,17 @@ export default new Vuex.Store({
         state.isLogged = true
       }
       return state.isLogged
+    },
+    getWeatherInfoObj: state => {
+      const tempString = sessionStorage.getItem("weatherInfoObj")
+      let tempObject
+      if(tempString){
+        tempObject = JSON.parse(tempString) as WeatherInfoObjInterface
+        if(tempObject){
+          state.weatherInfoObj = tempObject
+        }
+      }      
+      return state.weatherInfoObj
     }
   },
   mutations: {
@@ -66,6 +79,9 @@ export default new Vuex.Store({
     },
     login(state, payload: boolean){
       state.isLogged=payload
+    },
+    setWeatherInfoObj(state, payload: WeatherInfoObjInterface){
+      state.weatherInfoObj=payload;
     }
   },
   actions: {
@@ -86,15 +102,25 @@ export default new Vuex.Store({
       sessionStorage.setItem("isLogged", "true")
       context.commit("login")
     },
+    setWeatherInfoObj(context, payload: WeatherInfoObjInterface){
+      let temp = ""
+      if(payload){
+        temp = JSON.stringify(payload)  
+      }
+      sessionStorage.setItem("weatherInfoObj", temp)
+      context.commit("setWeatherInfoObj", temp)
+    },
     reset({commit}){
       sessionStorage.setItem("username", "")
       sessionStorage.setItem("usernameColor", "")
       sessionStorage.setItem("city", "")
       sessionStorage.setItem("isLogged", "false")
+      sessionStorage.setItem("weatherInfoObj", "")
       commit("setUsername", "")
       commit("setUsernameColor", "")
       commit("setCity", "")
       commit("login", false)
+      commit("setWeatherInfoObj", null)
     }
   }
 })

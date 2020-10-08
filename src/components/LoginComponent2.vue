@@ -23,9 +23,9 @@
             const usernameInputElement: HTMLInputElement = this.$refs.usernameInputElement as HTMLInputElement
             const usernameInputValue = usernameInputElement.value.trim()
             if(usernameInputElement){
+              this.$store.dispatch('reset')
               this.$store.dispatch('setUsername', usernameInputValue)
               this.$store.dispatch("setUsernameColor", "greenyellow")
-              this.$store.dispatch("setCity", "")
               this.$store.dispatch("login")
               this.$router.push("/")
             } else{

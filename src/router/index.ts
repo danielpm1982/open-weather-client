@@ -8,6 +8,7 @@ import Electronjs from '../views/Electronjs.vue'
 import Ts from '../views/Ts.vue'
 import Login from '../views/Login.vue'
 import CurrentWeather from '../views/CurrentWeather.vue'
+import CurrentWeatherResponse from '../views/CurrentWeatherResponse.vue'
 import Logout from '../views/Logout.vue'
 Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
@@ -20,6 +21,11 @@ const routes: Array<RouteConfig> = [
     path: '/current-weather',
     name: 'CurrentWeather',
     component: CurrentWeather
+  },
+  {
+    path: '/current-weather-response',
+    name: 'CurrentWeatherResponse',
+    component: CurrentWeatherResponse
   },
   {
     path: '/about',

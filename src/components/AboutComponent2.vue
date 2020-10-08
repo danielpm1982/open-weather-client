@@ -28,7 +28,9 @@
   div.centralTextAbout div.leftAlign{
     text-align: left;
     font-size: 0.9em;
-    padding-left: 4.5em;
+    /* padding-left: 4.5em; */
+    width: 580px;
+    margin: auto;
   }
   div.centralTextAbout div.leftAlign a{
     text-decoration: none;

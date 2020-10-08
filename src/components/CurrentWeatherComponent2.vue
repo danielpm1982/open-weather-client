@@ -10,23 +10,13 @@
     </div>
 </template>
 <script lang="ts">
-    //there's a current bug when importing electron submodules. See note at the end of this file
-    // // Substitute net rest requests for AXIOS and decouple this component from any Electron module
-    // const electron = window.require('electron')
-    // const remote: Electron.Remote = electron.remote
-    // const net: Electron.Net = remote.net
-    // let request: Electron.ClientRequest
-    
-    import WeatherInfoObjInterface from '../interfaces/Weather-info-obj-interface'
-    let weatherInfoObj: WeatherInfoObjInterface
-    const maxTimeInMillisForResponse = 10000
     const unitsSystem = 'metric'
     const appid = 'c90bb6a51603a99515006429cd457dc0' //sample key
     let cityFormattedToURL
-    const method = 'GET'
-    const protocol = 'http:'
+    const protocol = 'http://'
     const hostname = 'api.openweathermap.org'
-    const didRespond = false //change to let when the code is finished
+    import WeatherInfoObjInterface from '../interfaces/Weather-info-obj-interface'
+    import axios from 'axios'
     import Vue from 'vue'
     import { mapGetters } from 'vuex'
     export default Vue.extend({
@@ -36,14 +26,29 @@
         },
         methods: {
             submitAction(): void{
-                const cityInputElement: HTMLInputElement = this.$refs.cityInputElement as HTMLInputElement;
-                this.$store.dispatch("setCity", cityInputElement.value);
-                alert("Current city: "+this.getCity);
-                alert("Current city formatted for URL: "+this.getCityFormattedToURL);
-
-                //UNDER CONSTRUCTION !!!!!!!
-                //UNDER CONSTRUCTION !!!!!!!
-                //UNDER CONSTRUCTION !!!!!!!
+                const cityInputElement: HTMLInputElement = this.$refs.cityInputElement as HTMLInputElement
+                this.$store.dispatch("setCity", cityInputElement.value)
+                const path = `/data/2.5/weather?q=${this.getCityFormattedToURL}&units=${unitsSystem}&APPID=${appid}`
+                axios
+                    .get<WeatherInfoObjInterface>(protocol+hostname+path)
+                    .then(response => 
+                        {
+                            if(response.status == 200){
+                                this.$store.dispatch('setWeatherInfoObj', response.data)
+                                this.$router.push('/current-weather-response')
+                            }
+                        }
+                    )
+                    .catch(error => 
+                        {
+                            if(error.response.status == 404){
+                                alert('Invalid city name ! Please, try again !\n\n'+error)
+                            } else{
+                                alert('Can\'t show current weather ! Please, try again later !\n\n'+error)
+                            }
+                            this.$store.dispatch('setWeatherInfoObj', "")
+                        }
+                    )
             }
         },
         computed: {

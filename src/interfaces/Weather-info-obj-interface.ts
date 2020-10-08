@@ -3,12 +3,12 @@ export default interface WeatherInfoObjInterface{
         lon: number,
         lat: number
     },
-    weather: {
+    weather: [
+        { description: string,
+        icon: string,
         id: number,
-        main: string,
-        description: string,
-        icon: string}[]
-    ,
+        main: string }
+    ],
     base: string,
     main: {
         temp: number,
