@@ -40,3 +40,9 @@ export default interface WeatherInfoObjInterface{
     name: string,
     cod: number
 }
+
+/* 
+This is the interface for the response object that will store the data received
+from the currentWeather REST service, which will be imported and used at the 
+CurrentWeather and CurrentWeatherResponse views and at their Vue subcomponents
+*/

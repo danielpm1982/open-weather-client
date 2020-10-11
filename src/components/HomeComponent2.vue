@@ -17,6 +17,7 @@
     },
     computed: {
       ...mapGetters(['getUsername', 'getUsernameColor']),
+      // if the state for the userName at the Vuex store is "", resets to "World"
       getUserNameLocal() {
         const temp = this.getUsername
         if(!temp){
@@ -24,6 +25,7 @@
         }
         return temp
       },
+      // if the state for the userNameColor at the Vuex store is "", resets to "white"
       getUserNameColorLocal() {
         const temp = this.getUsernameColor
         if(!temp){

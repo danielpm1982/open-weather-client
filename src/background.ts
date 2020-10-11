@@ -76,7 +76,7 @@ function createMainMenuTemplate(): object[]{
             label: 'Logout',
             accelerator: process.platform == 'darwin' ? 'Command+O': 'Ctrl+O',
             click(){
-                win!.webContents.send("logout")
+                win!.loadURL("http://localhost:8080/logout")
             }
         },
         {

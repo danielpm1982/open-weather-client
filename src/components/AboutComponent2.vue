@@ -40,3 +40,8 @@
     margin-right: 1em;
   }
 </style>
+
+The links here open in a new window, not in the single page main window,
+in order to let explicit to the user that that link is an external url 
+resource and not part of this application. It's the only place at the app
+where multiple windows are created.

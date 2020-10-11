@@ -2,11 +2,11 @@
     <div>
         <div class="centralTextWeatherResponse">
             <p>City Name: {{ weather.name }}</p>
-            <p>City Id: {{ weather.id }} City Code: {{ weather.cod }}</p>
+            <p>City Id: {{ weather.id }}</p>
             <p>Country Code: {{ weather.sys.country }}</p>
             <p>Coordinates: latitude {{ weather.coord.lat }} longitude {{ weather.coord.lon }}</p>
             <p>Time Zone: UTC {{ weather.timezone/3600 }}</p>
-            <p>Weather Description: {{ weather.weather[0].description }}</p>
+            <p>Weather Description: {{ weather.weather[0].main }} - {{ weather.weather[0].description }}</p>
             <p>Wind Speed (meter/sec): {{ weather.wind.speed }}</p>
             <p>Wind Direction (degrees): {{ weather.wind.deg }}</p>
             <p>Visibility (meters): {{ weather.visibility }}</p>
@@ -17,7 +17,7 @@
             <p>Temperature Maximum (Celsius): {{ weather.main.temp_max }}</p>
             <p>Pressure (hPa): {{ weather.main.pressure }}</p>
             <p>Humidity (%): {{ weather.main.humidity }}</p>
-            <p>Last Updated: {{ getLastUpdateDateTime.dateString }} {{ getLastUpdateDateTime.timeString }} *</p>
+            <p>Last Updated: {{ getLastUpdateDateTime.dateString }} {{ getLastUpdateDateTime.timeString }}</p>
         </div>
         <footer id="footerTextWeatherResponse">
             <p>Source: http://api.openweathermap.org/data/2.5/weather</p>
@@ -72,3 +72,7 @@
         margin-bottom: 1em;
     }
 </style>
+
+This component simply gets the weatherInfoObj from the Vuex store, treats its 
+data to a proper and user-friendly format and shows to the user through the 
+CurrentWeatherResponse view
