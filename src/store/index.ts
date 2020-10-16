@@ -7,6 +7,7 @@ export default new Vuex.Store({
     username: "" as string,
     usernameColor: "" as string,
     city: "" as string,
+    cityId: "" as string,
     isLogged: false as boolean,
     weatherInfoObj: null as unknown as WeatherInfoObjInterface
   },
@@ -31,6 +32,13 @@ export default new Vuex.Store({
         state.city = temp
       }
       return state.city
+    },
+    getCityId: state => {
+      const temp = sessionStorage.getItem("cityId") as string
+      if(temp){
+        state.cityId = temp
+      }
+      return state.cityId
     },
     getCityFormattedToURL: state => {
       const stringInitialValue = state.city
@@ -77,6 +85,9 @@ export default new Vuex.Store({
     setCity(state, payload: string){
       state.city=payload
     },
+    setCityId(state, payload: string){
+      state.cityId=payload
+    },
     login(state, payload: boolean){
       state.isLogged=payload
     },
@@ -98,6 +109,11 @@ export default new Vuex.Store({
       sessionStorage.setItem("city", temp)
       context.commit("setCity", temp)
     },
+    setCityId(context, payload: string){
+      const temp = payload.trim()
+      sessionStorage.setItem("cityId", temp)
+      context.commit("setCityId", temp)
+    },
     login(context){
       sessionStorage.setItem("isLogged", "true")
       context.commit("login")
@@ -114,11 +130,13 @@ export default new Vuex.Store({
       sessionStorage.setItem("username", "")
       sessionStorage.setItem("usernameColor", "")
       sessionStorage.setItem("city", "")
+      sessionStorage.setItem("cityId", "")
       sessionStorage.setItem("isLogged", "false")
       sessionStorage.setItem("weatherInfoObj", "")
       commit("setUsername", "")
       commit("setUsernameColor", "")
       commit("setCity", "")
+      commit("setCityId", "")
       commit("login", false)
       commit("setWeatherInfoObj", null)
     }
