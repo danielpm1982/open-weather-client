@@ -183,6 +183,7 @@ app.on('ready', async () => {
     }
   }
   createWindow()
+  fixAlertWin32Bug()
 })
 
 // Exit cleanly on request from parent process in development mode.
@@ -201,7 +202,7 @@ if (isDevelopment) {
 }
 
 /*
-Listens to the 'setMenuToLoggedInState' event, from the Home.vue Vue Component, in order 
+Listen to the 'setMenuToLoggedInState' event, from the Home.vue Vue Component, in order 
 to reset the app Menu according to the logging state from the Vuex store every time the
 Home component is created - including everytime the router redirects to the Home from the 
 Login or from the Logout routes
@@ -218,3 +219,28 @@ ipcMain.on('setMenuToLoggedInState', (e:Event, isLogged:boolean) => {
     mainMenu.getMenuItemById('currentWeather').enabled = false
   }
 });
+
+// Fix Windows bug of losing focus and turning it difficult for the user to regain it after any alert message blurs the window
+function fixAlertWin32Bug(){
+  const isWindows = process.platform === 'win32'
+  let needsFocusFix = false
+  let triggeringProgrammaticBlur = false
+  win!.on('blur', () => {
+    if(!triggeringProgrammaticBlur) {
+      needsFocusFix = true
+    }
+  })
+  win!.on('focus', () => {
+    if(isWindows && needsFocusFix) {
+      needsFocusFix = false
+      triggeringProgrammaticBlur = true
+      setTimeout(function () {
+        win!.blur()
+        win!.focus()
+        setTimeout(function () {
+          triggeringProgrammaticBlur = false
+        }, 100)
+      }, 100)
+    }
+  })
+}
