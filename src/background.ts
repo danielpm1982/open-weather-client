@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, Menu, protocol, BrowserWindow } from 'electron'
+import { app, Menu, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 
@@ -44,9 +44,6 @@ function createWindow() {
   })
   const mainMenuTemplate: object[] = createMainMenuTemplate()
   const mainMenu: Menu = Menu.buildFromTemplate(mainMenuTemplate)
-  // mainMenu.getMenuItemById('login').enabled = true;
-  // mainMenu.getMenuItemById('logout').enabled = false;
-  // mainMenu.getMenuItemById('currentWeather').enabled = false;
   Menu.setApplicationMenu(mainMenu)
 }
 
@@ -202,3 +199,22 @@ if (isDevelopment) {
     })
   }
 }
+
+/*
+Listens to the 'setMenuToLoggedInState' event, from the Home.vue Vue Component, in order 
+to reset the app Menu according to the logging state from the Vuex store every time the
+Home component is created - including everytime the router redirects to the Home from the 
+Login or from the Logout routes
+*/
+ipcMain.on('setMenuToLoggedInState', (e:Event, isLogged:boolean) => {
+  const mainMenu: Menu = Menu.getApplicationMenu() as Menu
+  if(isLogged){
+    mainMenu.getMenuItemById('login').enabled = false
+    mainMenu.getMenuItemById('logout').enabled = true
+    mainMenu.getMenuItemById('currentWeather').enabled = true
+  } else{
+    mainMenu.getMenuItemById('login').enabled = true
+    mainMenu.getMenuItemById('logout').enabled = false
+    mainMenu.getMenuItemById('currentWeather').enabled = false
+  }
+});
