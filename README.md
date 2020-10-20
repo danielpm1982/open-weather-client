@@ -15,6 +15,9 @@ For running this project, you should have Node.js and npm installed globally. As
 If you then wanna create a final user distro for your OS, type:
 - "npm run electron:build". Then go to the distro folder and run the executable file.
 
+For more about it, see the references, used to create this project, at:<br>
+https://github.com/danielpm1982/open-weather-client/blob/master/references.md
+
 This repository is a single-project repo with Git version control.
 
 Some of my repositories are for backup only, each of them being a collection of tens of projects inside one same repo (with no individual version control for each project), and others are single-project repositores (with effective version control for that single project). As a distinction between them, the backup repos are named in uppercase with underscores (e.g. SPRING3) while the single-project ones are named in lowercase with dashes (e.g. springboot2-ac-di).

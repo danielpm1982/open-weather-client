@@ -41,23 +41,8 @@ inside the Vue components... 'cause that's the only way to emmit an event call t
 Electron main process from the renderer process or from the one and only rendered 
 BrowserWindow.
 
-Note: when and if having to import electron module and its submodules, as ipcRenderer, from 
-inside a Vue component, to avoid the errors "Uncaught TypeError: fs.existsSync is not a 
-function" and "'Electron' is not defined", as well as to be able to set the types of the 
-objects' variables correctly, instead of using "any" type, do the following:
-- use the ES6 "import" / "from" simply to have the Electron types defined, not to extract 
-the objects. This is for being able to use "typeof Electron.submoduleType". If setting the 
-types after the ":" of the variables, you don't need this
-- use the CommonJS "require" for importing the module and submodules, extract the objects, 
-and then set each variable type using the Electron types - either using the ":" or "typeof"
-- for setting the types on the variables of the electron objects, extract these mannually 
-from the required electron object and not through destructuring
-- disable the respective eslint rule, by setting "'@typescript-eslint/no-var-requires': 0" 
-at .eslintrc.js file, in order to allow the use of "require"
-- call the "require" always on the "window" object
-- set "nodeIntegration: true" at the webPreferences of the that window at the background.ts
-file
-- set "module": "CommonJS" at the tsconfig.json (to be able to use Electron interface types)
-- do not deploy that at the web server through "npm run serve", only use "npm run 
-electron:serve", except after you adapt the project for a web version, eliminating Electron 
-modules and code from it
+Please, read the "Importing electron module through "require", inside Vue.js components, 
+and avoiding errors" mini-article, at 
+https://github.com/danielpm1982/open-weather-client/blob/master/references.md, 
+for knowing how to import electron module and submodules inside Vue.js components, as done 
+here.
