@@ -64,7 +64,9 @@ const routes: Array<RouteConfig> = [
   }
 ]
 const router = new VueRouter({
-  mode: 'history',
+  // use "hash" if it's an Electron build or "history" if it's a web build.
+  // Avoid initial blank screen if history is used for electron:build.
+  mode: process.env.IS_ELECTRON ? 'hash' : 'history',
   base: process.env.BASE_URL,
   routes
 })

@@ -15,7 +15,16 @@ For running this project, you should have Node.js and npm installed globally. As
 If you then wanna create a final user distro for your OS, type:
 - "npm run electron:build". Then go to the distro folder and run the executable file.
 
-For more about it, see the references, used to create this project, at:<br>
+For a deployed Web version of this project, as a web app (with no Electron):<br>
+http://danielpm1982.com/public/open-weather-client/index.html
+
+The above Web version sources:<br>
+https://github.com/danielpm1982/open-weather-client-web/releases
+
+For a simpler Desktop version of this project, without Vue.js (with and without TypeScript):<br>
+https://github.com/danielpm1982/electronjs-hello-world/releases
+
+For more, see the references, used to create this project, at:<br>
 https://github.com/danielpm1982/open-weather-client/blob/master/references.md
 
 This repository is a single-project repo with Git version control.

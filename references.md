@@ -94,6 +94,12 @@ https://michaelnthiessen.com/hover-in-vue/
 How to activate / deactivate an Electron.js submenu from inside a Vue.js Component according to a specific Vuex state?<br>
 https://stackoverflow.com/questions/64236416/how-to-activate-deactivate-an-electron-js-submenu-from-inside-a-vue-js-compone
 
+How should I change the Vue route by using an Electron Menu click() event?
+https://stackoverflow.com/questions/64475172/how-should-i-change-the-vue-route-by-using-an-electron-menu-click-event/
+
+Blank screen on builds, but works fine on serve
+https://nklayman.github.io/vue-cli-plugin-electron-builder/guide/commonIssues.html
+
 The input-box lose focus after call window.alert('...')<br>
 https://github.com/electron/electron/issues/19977
 

@@ -13,10 +13,20 @@
 <script lang="ts">
   import Vue from 'vue';
   import { mapGetters } from 'vuex';
+  const electron = window.require('electron')
+  const ipcRenderer = electron.ipcRenderer as Electron.IpcRenderer
   export default Vue.extend({
     name: 'App',
     computed:{
       ...mapGetters(['isLogged'])
+    },
+    created(){
+      // listens to the main process 'changeRouteTo' event and changes the route from 
+      // inside this Vue instance, according to what path the main process requires.
+      // responds to Menu click() events at the main process and changes the route accordingly.
+      ipcRenderer.on('changeRouteTo', (event: Event, path: string) => {
+        this.$router.push(path)
+      })
     }
   })
 </script>
@@ -65,4 +75,18 @@ and, if the user is already logged, the Logout option and Current Weather will
 appear but the Login option will not.
 
 I've managed to conditionally show the view-links according to the login state,
-but I've not yet done the same with the Electron submenus.
+as well as do the same with the Electron submenus (see Home.vue).
+
+It had to be used the ipcRenderer here, although the effort of not using any 
+Electron API inside the Vue components (also it's used at the Home.vue)... 'cause 
+that's the only way to emmit an event call from the main process to the renderer process, 
+or to this Vue component (or vice versa, as in the Home.vue). In turn, and in the case of 
+this App.vue component, the routes can be changed here according to the path passed as the 
+payload, through the "changeRouteTo" channel, reactively to the Menu click() events at the 
+main process.
+
+Please, read the "Importing electron module through "require", inside Vue.js components, 
+and avoiding errors" mini-article, at 
+https://github.com/danielpm1982/open-weather-client/blob/master/references.md, 
+for knowing how to import electron module and submodules inside Vue.js components, as done 
+here.

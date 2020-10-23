@@ -57,7 +57,21 @@ function createMainMenuTemplate(): object[]{
           label: 'Home',
           accelerator: process.platform == 'darwin' ? 'Command+H': 'Ctrl+H',
           click(){
-            win!.loadURL("http://localhost:8080/")
+            /* 
+            As it's a SPA, the page shouldn't be reloaded, only the Vue route should
+            change. So, instead of calling loadURL at the main process, as it would be 
+            done on a MPA, send an IPC msg (through webContents) to the renderer in order
+            to make it change the route from inside the App.vue component, which is the 
+            outer most component, the one that will be already loaded at all times, for 
+            all the possible included views (subcomponents). As soon as this msg from the 
+            main process is received at the App.vue, it changes the route to the specified 
+            one, according to the path passed as the payload, through the changeRouteTo 
+            channel. This same strategy is used with all Menu click() events below that 
+            require the route to be changed from inside the Vue component, at the renderer 
+            process, instead of here at the main one.
+            */
+            // win!.loadURL("http://localhost:8080/")
+            win!.webContents.send("changeRouteTo", "/")
           }
         },
         {
@@ -65,7 +79,7 @@ function createMainMenuTemplate(): object[]{
             label: 'Login',
             accelerator: process.platform == 'darwin' ? 'Command+L': 'Ctrl+L',
             click(){
-              win!.loadURL("http://localhost:8080/login")
+              win!.webContents.send("changeRouteTo", "/login")
             }
         },
         {
@@ -73,7 +87,7 @@ function createMainMenuTemplate(): object[]{
             label: 'Logout',
             accelerator: process.platform == 'darwin' ? 'Command+O': 'Ctrl+O',
             click(){
-                win!.loadURL("http://localhost:8080/logout")
+                win!.webContents.send("changeRouteTo", "/logout")
             }
         },
         {
@@ -113,7 +127,7 @@ function createMainMenuTemplate(): object[]{
               label: 'Current Weather',
               accelerator: process.platform == 'darwin' ? 'Command+W': 'Ctrl+W',
               click(){
-                win!.loadURL("http://localhost:8080/current-weather")
+                win!.webContents.send("changeRouteTo", "/current-weather")
               }
           }
       ]
@@ -125,7 +139,7 @@ function createMainMenuTemplate(): object[]{
               label: 'About',
               accelerator: process.platform == 'darwin' ? 'Command+U': 'Ctrl+U',
               click(){
-                win!.loadURL("http://localhost:8080/about")
+                win!.webContents.send("changeRouteTo", "/about")
               }
           }
       ]
