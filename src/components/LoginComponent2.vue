@@ -22,13 +22,11 @@
       }
     },
     methods: {
+      /* If username and password authenticate, reset previous values at the store,
+      save the current username at the store, change the usernameColor to greenyellow
+      at the store, call the login action at the store and go to the Home route. If the
+      authentication fails, show error message requesting the user to try again */
       submit(){
-        /*
-        If username and password authenticate, reset previous values at the store,
-        save the current username at the store, change the usernameColor to greenyellow
-        at the store, call the login action at the store and go to the Home route. If the
-        authentication fails, show error message requesting the user to try again
-        */
         if(this.authenticate){
           this.$store.dispatch('reset')
           this.$store.dispatch('setUsername', this.username)
@@ -48,7 +46,7 @@
     computed: {
       //insert future authentication logic here. No real authentication implemented yet.
       authenticate(){
-        if(this.$data.username&&this.password){
+        if(this.username&&this.password){
           return true
         } else{
           return false

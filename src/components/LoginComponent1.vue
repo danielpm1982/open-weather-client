@@ -12,7 +12,7 @@
 <style scoped>
     div.centralImageLogin{
         width: 80%;
-        margin: 1em auto 1em auto;
+        margin: 1em auto 2em auto;
     }
     img#login{
         width: 100px;

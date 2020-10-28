@@ -12,7 +12,7 @@
 <style scoped>
     div.centralImageOpenWeather{
         width: 80%;
-        margin: 0.5em auto 0em auto;
+        margin: -0.5em auto 0em auto;
     }
     img#openWeather{
       width: 300px;
