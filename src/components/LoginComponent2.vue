@@ -1,48 +1,67 @@
 <template>
     <div>
-      <div class="centralTextLogin">
-        Please, enter your username and password to login:
-      </div>
-      <form action="#" id="ipcForm" @submit.prevent="submitMethod">
-        <input type="text" id="username" placeholder="username" required :value="getUsername" ref="usernameInputElement" /><br>
-        <input type="password" id="password" placeholder="password" required ref="passwordInputElement" /><br>
+      <div class="centralTextLogin">{{ formLabel }}</div>
+      <form action="#" id="form" @submit.prevent="submit">
+        <input type="text" id="username" placeholder="username" required v-model.trim="username" /><br>
+        <h4>{{ showUsernamePreview }}</h4>
+        <input type="password" id="password" placeholder="password" v-model.trim.lazy="password" /><br>
         <input type="submit" value="Submit" />
+        <input type="button" value="Clear" @click="clear" />
       </form>
     </div>
 </template>
 <script lang="ts">
   import Vue from 'vue'
-  import { mapGetters } from 'vuex'
   export default Vue.extend({
     name: 'LoginComponent2',
     data(){
-      return {}
+      return {
+        formLabel: "Please, enter your username and password to login:",
+        username: "",
+        password: ""
+      }
     },
     methods: {
-        submitMethod(): void{
-            // gets the username and password inputs
-            const usernameInputElement: HTMLInputElement = this.$refs.usernameInputElement as HTMLInputElement
-            const usernameInputValue = usernameInputElement.value.trim()
-            const passwordInputElement: HTMLInputElement = this.$refs.passwordInputElement as HTMLInputElement
-            // if the trimmed username is not empty, resets ALL Vuex store and the browser sessionStorage data,
-            // then sets the new login username and the color to greenyellow. Also sets the "isLogged" state at
-            // the same Vuex store to true and redirects to the Home "/" route view.
-            if(usernameInputElement&&usernameInputValue){
-              this.$store.dispatch('reset')
-              this.$store.dispatch('setUsername', usernameInputValue)
-              this.$store.dispatch("setUsernameColor", "greenyellow")
-              this.$store.dispatch("login")
-              this.$router.push("/")
-            } else{
-              // else, alert the user the empty username is invalid and resets username and password to empty
-              alert("Invalid username!\n\nTry again!")
-              usernameInputElement.value=""
-              passwordInputElement.value=""
-            }
+      submit(){
+        /*
+        If username and password authenticate, reset previous values at the store,
+        save the current username at the store, change the usernameColor to greenyellow
+        at the store, call the login action at the store and go to the Home route. If the
+        authentication fails, show error message requesting the user to try again
+        */
+        if(this.authenticate){
+          this.$store.dispatch('reset')
+          this.$store.dispatch('setUsername', this.username)
+          this.$store.dispatch("setUsernameColor", "greenyellow")
+          this.$store.dispatch("login")
+          this.$router.push("/")
+        } else{
+          alert("Invalid username and/or password !\n\nAuthentication failed !\n\nTry again !")
         }
+      },
+      // clear form fields
+      clear(){
+        this.username=""
+        this.password=""
+      }
     },
     computed: {
-      ...mapGetters(['getUsername'])
+      //insert future authentication logic here. No real authentication implemented yet.
+      authenticate(){
+        if(this.$data.username&&this.password){
+          return true
+        } else{
+          return false
+        }
+      },
+      // show a realtime preview of the username at the template while typing
+      showUsernamePreview(){
+        if(this.username){
+          return "username: "+this.$data.username
+        } else{
+          return ""
+        }
+      }
     }
   })
 </script>
@@ -61,11 +80,15 @@
         margin-bottom: 1em;
         padding: 0.3em;
     }
-    input[type=submit]{
+    input[type=submit], input[type=button]{
         padding: 0.3em 1em 0.3em 1em;
         font-size: 1.1em;
+        margin-right: 1em;
+        margin-left: 1em;
+        width: 130px;
+    }
+    h4{
+      color: white;
+      margin-top: -0.7em;
     }
 </style>
-
-
-This is a mockup authentication component. No real validation on the username or password is actually done here.

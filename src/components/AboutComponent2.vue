@@ -1,17 +1,30 @@
 <template>
   <div class="centralTextAbout">
-    <div class="centerAlign">This is an app created by Daniel Pinheiro, from danielpm1982.com .</div>
+    <div class="centerAlign">{{ description }}</div>
     <div class="leftAlign">
-      <span class="linkDescription">Email:</span><a href = "mailto: danielpm1982.com@domainsbyproxy.com">danielpm1982.com@domainsbyproxy.com</a><br>
-      <span class="linkDescription">Website:</span><a target="_blank" href = "http://danielpm1982.com">http://danielpm1982.com</a><br>
-      <span class="linkDescription">Github:</span><a target="_blank" href = "https://github.com/danielpm1982/open-weather-client/issues">https://github.com/danielpm1982/open-weather-client/issues</a>
+      <span class="linkDescription">Email:</span><a :href="emailMailTo">{{ email }}</a><br>
+      <span class="linkDescription">Website:</span><a target="_blank" :href="webSite">{{ webSite }}</a><br>
+      <span class="linkDescription">Github:</span><a target="_blank" :href="gitHub">{{ gitHub }}</a>
     </div>
   </div>
 </template>
 <script lang="ts">
   import Vue from 'vue'
   export default Vue.extend({
-    name: 'AboutComponent2'
+    name: 'AboutComponent2',
+    data(){
+      return {
+        description: "This is an app created by Daniel Pinheiro, from danielpm1982.com .",
+        email: "danielpm1982.com@domainsbyproxy.com",
+        webSite: "http://danielpm1982.com",
+        gitHub: "https://github.com/danielpm1982/open-weather-client/issues"
+      }
+    },
+    computed: {
+      emailMailTo(){
+        return "mailto: "+this.$data.email
+      }
+    }
   })
 </script>
 <style scoped>

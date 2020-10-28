@@ -6,13 +6,13 @@
 <script lang="ts">
   import Vue from 'vue'
   export default Vue.extend({
-    name: 'LoginComponent1',
+    name: 'LoginComponent1'
   })
 </script>
 <style scoped>
     div.centralImageLogin{
         width: 80%;
-        margin: 2em auto 2em auto;
+        margin: 1em auto 1em auto;
     }
     img#login{
         width: 100px;
